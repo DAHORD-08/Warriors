@@ -5,7 +5,7 @@ public class ClickCubeSpawner : MonoBehaviour
 {
     [Header("Références")]
     public Transform player;
-    public GameObject parryParticlePrefab;
+    public GameObject parryVisualEffectPrefab;
 
     [Header("Paramètres du cube")]
     public float spawnDistance = 1.5f;
@@ -74,7 +74,7 @@ public class ClickCubeSpawner : MonoBehaviour
 
         ParryCubeTrigger trigger = cube.AddComponent<ParryCubeTrigger>();
         trigger.enemyAttackTag = enemyAttackTag;
-        trigger.particlePrefab = parryParticlePrefab;
+        trigger.visualEffectPrefab = parryVisualEffectPrefab;
 
         Destroy(cube, lifetime);
     }
@@ -97,13 +97,13 @@ public class ClickCubeSpawner : MonoBehaviour
 public class ParryCubeTrigger : MonoBehaviour
 {
     public string enemyAttackTag = "AtkEnemy";
-    public GameObject particlePrefab;
+    public GameObject visualEffectPrefab;
 
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(enemyAttackTag)) return;
 
-        if (particlePrefab != null)
-            Instantiate(particlePrefab, transform.position, Quaternion.identity);
+        if (visualEffectPrefab != null)
+            Instantiate(visualEffectPrefab, transform.position, Quaternion.identity);
     }
 }

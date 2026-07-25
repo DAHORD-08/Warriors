@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickCubeSpawner
   player: {fileID: 0}
-  parryParticlePrefab: {fileID: 4692291249629818094, guid: abbc8e9db0aff734691882a0d0718af9, type: 3}
+  parryVisualEffectPrefab: {fileID: 4888707131976873290, guid: cb02696956f21494696bbc678a42dcdb, type: 3}
   spawnDistance: 1.5
   cubeSize: 0.5
   lifetime: 0.2
