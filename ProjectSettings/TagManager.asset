@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - AtkPlayer
+  - AtkEnemy
+  - ParryPlayer
+  - Lockable
   layers:
   - Default
   - TransparentFX
