@@ -100,27 +100,29 @@ public class EnemyCapsule : MonoBehaviour
     }
 
     private void SpawnHitbox()
+{
+    Vector3 spawnPos = transform.position + transform.forward * hitboxSpawnDistance + Vector3.up * (hitboxSize * 0.5f);
+
+    GameObject hitbox = GameObject.CreatePrimitive(PrimitiveType.Cube);
+    hitbox.transform.position = spawnPos;
+    hitbox.transform.rotation = transform.rotation;
+    hitbox.transform.localScale = Vector3.one * hitboxSize;
+    hitbox.tag = "Untagged";
+
+    Collider col = hitbox.GetComponent<Collider>();
+    col.isTrigger = true;
+
+    Renderer rend = hitbox.GetComponent<Renderer>();
+    rend.material = new Material(Shader.Find("Sprites/Default"))
     {
-        Vector3 spawnPos = transform.position + transform.forward * hitboxSpawnDistance + Vector3.up * (hitboxSize * 0.5f);
+        color = new Color(0f, 1f, 0f, 0.5f)
+    };
 
-        GameObject hitbox = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        hitbox.transform.position = spawnPos;
-        hitbox.transform.rotation = transform.rotation;
-        hitbox.transform.localScale = Vector3.one * hitboxSize;
-        hitbox.tag = "Untagged";
+    hitbox.AddComponent<EnemyAtkHitbox>();
 
-        Collider col = hitbox.GetComponent<Collider>();
-        col.isTrigger = true;
-
-        Renderer rend = hitbox.GetComponent<Renderer>();
-        rend.material = new Material(Shader.Find("Sprites/Default"))
-        {
-            color = new Color(0f, 1f, 0f, 0.5f)
-        };
-
-        Destroy(hitbox, hitboxDuration);
-        StartCoroutine(ActivateHitboxAfterDelay(hitbox, rend));
-    }
+    Destroy(hitbox, hitboxDuration);
+    StartCoroutine(ActivateHitboxAfterDelay(hitbox, rend));
+}
 
     private IEnumerator ActivateHitboxAfterDelay(GameObject hitbox, Renderer rend)
     {
