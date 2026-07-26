@@ -21,9 +21,14 @@ public class ClickCubeSpawner : MonoBehaviour
     public string parryTag = "ParryPlayer";
     public string enemyAttackTag = "AtkEnemy";
 
+    [Header("Son")]
+    public AudioClip parrySuccessSound;
+    [Range(0f, 1f)] public float parrySoundVolume = 1f;
+
     private Material redMaterial;
     private Material blueMaterial;
     private float lastActionTime = -999f;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -32,6 +37,10 @@ public class ClickCubeSpawner : MonoBehaviour
         Shader shader = Shader.Find("Sprites/Default");
         redMaterial = new Material(shader) { color = new Color(1f, 0f, 0f, alpha) };
         blueMaterial = new Material(shader) { color = new Color(0f, 0f, 1f, alpha) };
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -75,6 +84,7 @@ public class ClickCubeSpawner : MonoBehaviour
         ParryCubeTrigger trigger = cube.AddComponent<ParryCubeTrigger>();
         trigger.enemyAttackTag = enemyAttackTag;
         trigger.visualEffectPrefab = parryVisualEffectPrefab;
+        trigger.spawner = this;
 
         Destroy(cube, lifetime);
     }
@@ -92,18 +102,39 @@ public class ClickCubeSpawner : MonoBehaviour
 
         return cube;
     }
+
+    public void ResetCooldown()
+    {
+        lastActionTime = -999f;
+    }
+
+    public void PlayParrySound()
+    {
+        if (parrySuccessSound != null && audioSource != null)
+            audioSource.PlayOneShot(parrySuccessSound, parrySoundVolume);
+    }
 }
 
 public class ParryCubeTrigger : MonoBehaviour
 {
     public string enemyAttackTag = "AtkEnemy";
     public GameObject visualEffectPrefab;
+    public ClickCubeSpawner spawner;
 
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(enemyAttackTag)) return;
 
         if (visualEffectPrefab != null)
-            Instantiate(visualEffectPrefab, transform.position, Quaternion.identity);
+        {
+            GameObject vfx = Instantiate(visualEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(vfx, 1f);
+        }
+
+        if (spawner != null)
+        {
+            spawner.ResetCooldown();
+            spawner.PlayParrySound();
+        }
     }
 }
