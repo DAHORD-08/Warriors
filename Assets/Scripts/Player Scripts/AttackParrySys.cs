@@ -66,7 +66,10 @@ public class ClickCubeSpawner : MonoBehaviour
     private void SpawnAttackCube()
     {
         GameObject cube = CreateCube(redMaterial, attackTag);
-        Destroy(cube.GetComponent<Collider>());
+
+        Collider col = cube.GetComponent<Collider>();
+        col.isTrigger = true;
+
         Destroy(cube, lifetime);
     }
 

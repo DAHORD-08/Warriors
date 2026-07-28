@@ -597,6 +597,8 @@ GameObject:
   - component: {fileID: 465067120}
   - component: {fileID: 465067119}
   - component: {fileID: 465067118}
+  - component: {fileID: 465067124}
+  - component: {fileID: 465067125}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -618,12 +620,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCapsule
   player: {fileID: 0}
   playerTag: Player
-  moveSpeed: 4
+  moveSpeed: 7
   minDistance: 1
   maxDistance: 6
-  decisionInterval: 1
-  attackRange: 2
-  attackCooldown: 1
+  decisionInterval: 0.5
+  attackRange: 3
+  attackCooldown: 0.5
   enemyAttackTag: AtkEnemy
   hitboxSize: 2
   hitboxSpawnDistance: 1.2
@@ -751,6 +753,49 @@ Transform:
   - {fileID: 791727694}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &465067124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465067117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7217a1971965d154f87446b5260ef35b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 150
+  damageAmount: 10
+  invincibilityTime: 0.5
+  destroyDelay: 0
+--- !u!54 &465067125
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465067117}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &525856772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,7 +1195,7 @@ MonoBehaviour:
   player: {fileID: 0}
   parryVisualEffectPrefab: {fileID: 7754214806235117835, guid: cb02696956f21494696bbc678a42dcdb, type: 3}
   spawnDistance: 2
-  cubeSize: 1
+  cubeSize: 2
   lifetime: 0.2
   alpha: 0.25
   actionCooldown: 1
